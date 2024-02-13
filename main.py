@@ -1,29 +1,47 @@
-from argparse import ArgumentParser
 import random
 
-parser = ArgumentParser()
 
-MIN_VALUE = 0
-MAX_VALUE = 100
+# num = input('hui')
+# rand_num = random.randint(100, 1000)
+# if num == rand_num:
+#     print('Ohuenno')
+# else:
+#     print('Idi nahui')
 
-parser.add_argument('-g', '--guess', type=int, help='Enter number between given range ', )
+def validate_pos_num(num):
+    try:
+        parsed = int(num)
+    except ValueError:
+        raise ValueError('Input must be an integer')
+
+    if parsed < 0:
+        raise ValueError('Input must be non-negative')
+
+    return parsed
 
 
-def generate_number(min_range=0, max_range=100):
-    rand_num = random.randint(min_range, max_range)
-    return rand_num
-
-
-def user_int(prompt):
-    global user_num
+def get_positive_int(prompt):
     while True:
+        num = input(prompt)
         try:
-            user_num = int(input(prompt))
-            break
+            return validate_pos_num(num)
+        except ValueError as e:
+            print(e)
 
-        except ValueError:
-            print('Enter correct value(int)')
-    return user_num
+
+def validate_range(min_value: int, max_value: int):
+    if min_value > max_value:
+        temp = max_value
+        max_value = min_value
+        min_value = temp
+    return min_value, max_value
+
+
+def get_range():
+    min_value = get_positive_int('Enter minimal value: >>> ')
+    max_value = get_positive_int('Enter maximum value: >>> ')
+
+    return validate_range(min_value, max_value)
 
 
 def check_input(random_num: int, user_num: int):
@@ -38,12 +56,21 @@ def check_input(random_num: int, user_num: int):
         return True
 
 
-def main():
+def game_loop():
     check = False
-    random_num = generate_number(MIN_VALUE, MAX_VALUE)
+    min_value, max_value = get_range()
+    print(min_value, max_value)
+    random_num = random.randint(min_value, max_value)
     while not check:
-        user_num = user_int(f'Try to guess number between {MIN_VALUE} and {MAX_VALUE}: >> ')
-        check = check_input(random_num, user_num)
+        user_num = get_positive_int(f'Try to guess number between {min_value} and {max_value}: >> ')
+        if user_num in range(min_value, max_value + 1):
+            check = check_input(random_num, user_num)
+        else:
+            print(f'Enter value in given range({min_value}, {max_value})')
+
+
+def main():
+    game_loop()
 
 
 if __name__ == '__main__':

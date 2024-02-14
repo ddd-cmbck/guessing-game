@@ -1,13 +1,6 @@
 import random
 
 
-# num = input('hui')
-# rand_num = random.randint(100, 1000)
-# if num == rand_num:
-#     print('Ohuenno')
-# else:
-#     print('Idi nahui')
-
 def validate_pos_num(num):
     try:
         parsed = int(num)

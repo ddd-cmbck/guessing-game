@@ -39,3 +39,16 @@ class TestGetPosInt(unittest.TestCase):
     def test_multiple_invalid_inputs_followed_by_correct_input(self, mock_print, mock_input):
         self.assertEqual(main.get_positive_int("Enter a positive number: "), 20)
 
+
+class TestValidateRange(unittest.TestCase):
+    def test_min_equal_to_max(self):
+        self.assertEqual(main.validate_range(10, 10), (10, 10))
+
+    def test_min_less_than_max(self):
+        self.assertEqual(main.validate_range(1, 10), (1, 10))
+
+    def test_min_greater_than_max(self):
+        self.assertEqual(main.validate_range(10, 1), (1, 10))
+
+    def test_large_values(self):
+        self.assertEqual(main.validate_range(100000000, 500000000), (100000000, 500000000))

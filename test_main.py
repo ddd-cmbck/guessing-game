@@ -67,13 +67,13 @@ class TestGetRange(unittest.TestCase):
 
 class TestCheckInput(unittest.TestCase):
     def test_with_bigger_random_num(self):
-        self.assertFalse(main.check_input(10, 2))
+        self.assertEqual(main.check_input(10, 2), (False, 'Enter bigger number'))
 
     def test_with_smaller_random_num(self):
-        self.assertFalse(main.check_input(2, 10))
+        self.assertEqual(main.check_input(2, 10), (False, 'Enter smaller number'))
 
     def test_with_same_nums(self):
-        self.assertTrue(main.check_input(2, 2))
+        self.assertEqual(main.check_input(2, 2), (True, 'You guessed correctly'))
 
 
 class TestIntegration(unittest.TestCase):

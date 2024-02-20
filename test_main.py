@@ -52,3 +52,23 @@ class TestValidateRange(unittest.TestCase):
 
     def test_large_values(self):
         self.assertEqual(main.validate_range(100000000, 500000000), (100000000, 500000000))
+
+
+class TestGetRange(unittest.TestCase):
+    @patch('main.get_positive_int')
+    def test_get_range(self, mock_get_positive_int):
+        mock_get_positive_int.side_effect = [3, 12]
+        self.assertEqual(main.get_range(), (3, 12))
+
+        mock_get_positive_int.side_effect = [12, 3]
+        self.assertEqual(main.get_range(), (3, 12))
+
+class TestCheckInput(unittest.TestCase):
+    def test_with_bigger_random_num(self):
+        self.assertFalse(main.check_input(10, 2))
+
+    def test_with_smaller_random_num(self):
+        self.assertFalse(main.check_input(2, 10))
+
+    def test_with_same_nums(self):
+        self.assertTrue(main.check_input(2, 2))

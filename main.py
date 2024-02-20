@@ -39,31 +39,39 @@ def get_range():
 
 def check_input(random_num: int, user_num: int):
     if user_num > random_num:
-        print('Enter smaller number')
-        return False
+        msg = 'Enter smaller number'
+        return False, msg
     elif user_num < random_num:
-        print('Enter bigger number')
-        return False
+        msg = 'Enter bigger number'
+        return False, msg
     else:
-        print('You guessed correctly')
-        return True
+        msg = 'You guessed correctly'
+        return True, msg
 
 
 def game_loop():
+    results = []
+    msg = 'default'
     check = False
+
     min_value, max_value = get_range()
+
     print(min_value, max_value)
     random_num = random.randint(min_value, max_value)
     while not check:
         user_num = get_positive_int(f'Try to guess number between {min_value} and {max_value}: >> ')
         if user_num in range(min_value, max_value + 1):
-            check = check_input(random_num, user_num)
+            check, msg = check_input(random_num, user_num)
+            print(msg)
+            results.append(msg)
         else:
             print(f'Enter value in given range({min_value}, {max_value})')
+    return results
 
 
 def main():
-    game_loop()
+    game_info = game_loop()
+    print(game_info)
 
 
 if __name__ == '__main__':

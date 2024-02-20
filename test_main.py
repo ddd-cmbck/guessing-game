@@ -1,4 +1,5 @@
 import unittest
+import random
 import main
 from unittest.mock import patch
 
@@ -63,6 +64,7 @@ class TestGetRange(unittest.TestCase):
         mock_get_positive_int.side_effect = [12, 3]
         self.assertEqual(main.get_range(), (3, 12))
 
+
 class TestCheckInput(unittest.TestCase):
     def test_with_bigger_random_num(self):
         self.assertFalse(main.check_input(10, 2))
@@ -72,3 +74,12 @@ class TestCheckInput(unittest.TestCase):
 
     def test_with_same_nums(self):
         self.assertTrue(main.check_input(2, 2))
+
+
+class TestIntegration(unittest.TestCase):
+    @patch('main.get_range', return_value=(0, 10))
+    @patch('main.get_positive_int', side_effect=[1, 5, 8, 9, 10])
+    def test_with_5_inputs(self, mock_get_range, mock_get_positive_int):
+        random.seed(10)
+        self.assertTrue(main.game_loop())
+

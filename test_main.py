@@ -81,5 +81,22 @@ class TestIntegration(unittest.TestCase):
     @patch('main.get_positive_int', side_effect=[1, 5, 8, 9, 10])
     def test_with_5_inputs(self, mock_get_range, mock_get_positive_int):
         random.seed(10)
-        self.assertTrue(main.game_loop())
+        test_results = ['Enter bigger number',
+                        'Enter bigger number',
+                        'Enter bigger number',
+                        'You guessed correctly']
+        self.assertEqual(main.game_loop(), test_results)
 
+    @patch('main.get_range', return_value=(0, 1000))
+    @patch('main.get_positive_int', side_effect=[500, 400, 350, 330, 340, 345, 346, 347])
+    @patch('random.randint', return_value=347)
+    def test_with_8_inputs(self, mock_get_range, mock_get_positive_int, mock_randint):
+        test_results = ['Enter smaller number',
+                        'Enter smaller number',
+                        'Enter smaller number',
+                        'Enter bigger number',
+                        'Enter bigger number',
+                        'Enter bigger number',
+                        'Enter bigger number',
+                        'You guessed correctly']
+        self.assertEqual(main.game_loop(), test_results)

@@ -56,7 +56,7 @@ def game_loop():
 
     min_value, max_value = get_range()
 
-    print(min_value, max_value)
+    # print(min_value, max_value)
     random_num = random.randint(min_value, max_value)
     while not check:
         user_num = get_positive_int(f'Try to guess number between {min_value} and {max_value}: >> ')
@@ -70,8 +70,7 @@ def game_loop():
 
 
 def main():
-    game_info = game_loop()
-    print(game_info)
+    game_loop()
 
 
 if __name__ == '__main__':
